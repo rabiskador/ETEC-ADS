@@ -1,0 +1,289 @@
+
+Continuando
+nossos estudos de Banco de Dados com MySQL (no ambiente do myCompiler),
+vamos avançar para consultas de relatórios inteligentes e técnicas de segurança
+de dados.
+
+
+ 
+
+
+Antes
+de abrir o editor de código, faremos nossa tradicional etapa de Pesquisa
+Dicionário.
+
+
+
+
+
+
+
+
+
+Parte 1: Pesquisa Prévia (O que é e
+para que serve?)
+
+
+Pesquise
+o significado e a função de cada um dos termos abaixo. Escreva a definição com
+suas próprias palavras no formato de dicionário (Ex: TERMO: (O que faz...) Exemplo de
+uso...):
+
+
+
+
+
+
+
+
+
+JOIN (ou INNER JOIN)
+
+
+
+ 
+
+
+ORDER
+BY
+
+
+
+ 
+
+
+GROUP
+BY
+
+
+
+ 
+
+
+START
+TRANSACTION,
+COMMIT e ROLLBACK
+
+
+
+ 
+
+
+Funções
+de Agregação:
+COUNT(), SUM(), AVG(), MAX() e MIN()
+
+
+
+ 
+
+
+Parte 2: Exercício Prático no
+myCompiler
+
+
+Acesse
+o mycompiler.io/pt/new/mysql. Você criará o banco de dados
+de uma loja de jogos seguindo o passo a passo abaixo.
+
+
+ 
+
+
+Dica: Tire um print/foto
+do terminal sempre que realizar as consultas solicitadas para anexar na
+entrega!
+
+
+
+
+
+
+
+
+
+Passo 1: Criando a Estrutura
+
+
+Crie
+duas tabelas:
+
+
+
+
+
+
+
+
+
+plataformas (com id_plataforma como Chave Primária e nome do console/PC).
+
+
+
+ 
+
+
+jogos (com id_jogo como Chave Primária, nome do jogo, preco, quantidade_estoque e id_plataforma como Chave Estrangeira ligada à
+tabela plataformas).
+
+
+
+ 
+
+
+Passo 2: Inserindo Dados (INSERT INTO)
+
+
+Insira
+pelo menos 3 plataformas (Ex: PC, PlayStation 5, Nintendo Switch).
+
+
+
+ 
+
+
+Insira
+pelo menos 6 jogos distribuídos entre essas plataformas, com preços
+e estoques variados.
+
+
+
+ 
+
+
+Passo 3: Relatórios com Cruzamento e
+Ordenação (JOIN e ORDER BY)
+
+
+Faça
+uma consulta usando JOIN para exibir o nome do jogo, o preço e a plataforma em que ele roda.
+
+
+
+ 
+
+
+Faça
+uma consulta listando todos os jogos ordenados do mais caro para o mais
+barato usando ORDER
+BY.(📸 Tire print destas consultas!)
+
+
+
+ 
+
+
+Passo 4: Estatísticas e Agrupamentos (GROUP BY e Funções de
+Agregação)
+
+
+Utilize
+as funções de agregação para responder aos relatórios da gerência da loja:
+
+
+
+
+
+
+
+
+
+Qual
+é o preço médio (AVG)
+e o preço máximo (MAX)
+de todos os jogos cadastrados?
+
+
+
+ 
+
+
+Quantos
+jogos (COUNT) existem cadastrados no total?
+
+
+
+ 
+
+
+Use
+o GROUP
+BY
+agrupando por plataforma para mostrar quantos jogos existem em cada
+plataforma (COUNT).
+
+
+
+ 
+
+
+(Tire print dos relatórios gerados!)
+
+
+ 
+
+
+Passo 5: Segurança e Controle com
+Transações (TRANSACTION, COMMIT, ROLLBACK)
+
+
+Vamos
+simular um erro perigoso e aprender a nos salvar com o ROLLBACK:
+
+
+
+
+
+
+
+
+
+Inicie
+uma transação com START
+TRANSACTION.
+
+
+
+ 
+
+
+Execute
+um comando UPDATE sem o WHERE por engano, zerando o preço de todos
+os jogos da loja (SET
+preco = 0;).
+
+
+
+ 
+
+
+Dê
+um SELECT
+* FROM jogos;
+e veja a tragédia acontecer no terminal.
+
+
+
+ 
+
+
+Em
+vez de salvar, use o comando de resgate ROLLBACK; para voltar no tempo!
+
+
+
+ 
+
+
+Dê
+outro SELECT
+* FROM jogos;
+e comprove que os preços originais foram salvos milagrosamente.
+
+
+
+ 
+
+
+(Tire print do momento antes e depois
+do ROLLBACK!)
