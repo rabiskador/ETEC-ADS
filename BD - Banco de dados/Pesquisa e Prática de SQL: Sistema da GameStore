@@ -251,6 +251,10 @@ SELECT
 FROM jogos
 INNER JOIN plataforma ON jogos.id_plataforma = plataforma.id_plataforma;
 
+SELECT nome_jogo, preco
+FROM jogos
+ORDER BY preco DESC;
+
 
 
 
