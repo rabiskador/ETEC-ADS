@@ -61,8 +61,24 @@ BY
 
 
 START
-TRANSACTION,
-COMMIT e ROLLBACK
+TRANSACTION: START TRANSACTION (ou BEGIN / BEGIN TRANSACTION):• O que faz: Marca o início de uma transação.
+• Para que serve: A partir desse comando, o banco de dados "segura" as alterações feitas (inserções, atualizações ou exclusões) e não as torna definitivas de imediato. Outras sessões ou consultas normalmente não veem essas mudanças temporárias até que sejam confirmadas
+COMMIT: • O que faz: Confirma todas as operações realizadas dentro da transação.
+• Para que serve: Torna as alterações permanentes no banco de dados. Depois de um COMMIT, não dá mais para desfazer esses comandos específicos usando o banco.
+
+e ROLLBACK: • O que faz: Reverte (cancela) todas as alterações feitas desde o início da transação.
+• Para que serve: É usado quando acontece algum erro no meio do processo. Ele restaura o banco de dados exatamente ao estado em que ele estava antes de o START TRANSACTION ser chamado (como se você desse um "Ctrl + Z" em bloco)
+
+START TRANSACTION;
+
+UPDATE contas SET saldo = saldo - 100 WHERE id = 'A';
+UPDATE contas SET saldo = saldo + 100 WHERE id = 'B';
+
+-- Se deu tudo certo:
+COMMIT;
+
+-- Se aconteceu algum erro no meio do caminho:
+ROLLBACK;
 
 
 
@@ -71,7 +87,108 @@ COMMIT e ROLLBACK
 
 Funções
 de Agregação:
+COUNT(), SUM(), AVG(), MAX() e MIN(): 
+
+Conversa no Modo IA: o'que seria isso START TRANSACTION, COMMIT e ROLLBACK
+
+
+Você disse: o'que seria isso START TRANSACTION, COMMIT e ROLLBACK
+
+o'que seria isso START TRANSACTION, COMMIT e ROLLBACK
+No SQL (bancos de dados), START TRANSACTION (ou BEGIN), COMMIT e ROLLBACK são comandos de TCL (Transaction Control Language) usados para gerenciar transações.
+Uma transação é um bloco com uma ou mais operações (como INSERT, UPDATE ou DELETE) que o banco de dados trata como uma única unidade indivisível (princípio da atomicidade do ACID). Ou tudo acontece junto, ou nada acontece.
+
+Os três comandos explicados
+
+• START TRANSACTION (ou BEGIN / BEGIN TRANSACTION):
+	• O que faz: Marca o início de uma transação.
+	• Para que serve: A partir desse comando, o banco de dados "segura" as alterações feitas (inserções, atualizações ou exclusões) e não as torna definitivas de imediato. Outras sessões ou consultas normalmente não veem essas mudanças temporárias até que sejam confirmadas.
+• COMMIT:
+	• O que faz: Confirma todas as operações realizadas dentro da transação.
+	• Para que serve: Torna as alterações permanentes no banco de dados. Depois de um COMMIT, não dá mais para desfazer esses comandos específicos usando o banco.
+• ROLLBACK:
+	• O que faz: Reverte (cancela) todas as alterações feitas desde o início da transação.
+	• Para que serve: É usado quando acontece algum erro no meio do processo. Ele restaura o banco de dados exatamente ao estado em que ele estava antes de o START TRANSACTION ser chamado (como se você desse um "Ctrl + Z" em bloco).
+
+Exemplo prático (Transferência bancária)
+
+Imagine que você vai transferir dinheiro da Conta A para a Conta B. Isso envolve duas etapas:
+1. Retirar R$ 100 da Conta A (UPDATE).
+2. Adicionar R$ 100 na Conta B (UPDATE).
+Se a luz acabar ou der erro no meio do caminho (por exemplo, tirou da Conta A, mas deu erro antes de colocar na Conta B), o dinheiro sumiria. Com transações, você faz isso com segurança:
+sql
+START TRANSACTION;
+
+UPDATE contas SET saldo = saldo - 100 WHERE id = 'A';
+UPDATE contas SET saldo = saldo + 100 WHERE id = 'B';
+
+-- Se deu tudo certo:
+COMMIT;
+
+-- Se aconteceu algum erro no meio do caminho:
+ROLLBACK;
+Use o código com cuidado.
+Leia a Documentação Oficial do MySQL para ver detalhes sobre o controle de transações ou confira o artigo explicativo da Alura Cursos Online sobre a integridade dos dados.
+• 
+MySQL :: Developer Zone
+15.3.1 Instruções START TRANSACTION, COMMIT e ...
+Conteúdo traduzido — Essas declarações fornecem controle sobre o uso das transações : START TRANSACTION ou BEGIN inicia uma nova transação. O comando C...
+• 
+YouTube·Dia a Dia do Suporte 
+MySQL Course - Commit and Rollback
+ali no MySQL que ele ah vai efetivar né a gente chama de persistir os dados no banco então por exemplo vou inserir alguma coisa no...
+12:17
+• 
+Stack Overflow em Português
+sql - O que são as transações Begin, Commit e Rollback?
+É tudo feito em uma viagem da aplicação para o banco de dados. Em condições normais enquanto a transação não termina outras transa...
+Mostrar tudo
+
+Funções
+de Agregação:
 COUNT(), SUM(), AVG(), MAX() e MIN()
+
+As funções de agregação no SQL servem para realizar um cálculo sobre um conjunto de valores (uma coluna inteira ou várias linhas filtradas) e retornar um único valor resumido.
+Elas são frequentemente utilizadas em conjunto com a cláusula GROUP BY para agrupar os resultados por categorias.
+
+As 5 principais funções explicadas
+
+• COUNT():
+	• O que faz: Conta o número total de linhas ou registros.
+	• Exemplo: Saber quantos clientes estão cadastrados.
+	• Nota: COUNT(*) conta todas as linhas (incluindo nulas), enquanto COUNT(coluna) conta apenas as linhas onde a coluna não é nula (NULL).
+• SUM():
+	• O que faz: Soma os valores de uma coluna numérica.
+	• Exemplo: Calcular o faturamento total somando o valor de todas as vendas.
+• AVG() (Average):
+	• O que faz: Calcula a média aritmética dos valores de uma coluna numérica.
+	• Exemplo: Descobrir a média de idade dos funcionários da empresa.
+• MAX():
+	• O que faz: Identifica o maior valor (máximo) de uma coluna.
+	• Exemplo: Encontrar o produto mais caro do estoque ou a data de venda mais recente.
+• MIN():
+	• O que faz: Identifica o menor valor (mínimo) de uma coluna.
+	• Exemplo: Encontrar o produto mais barato ou o funcionário com o menor salário.
+
+Exemplo Prático
+
+Imagine uma tabela chamada produtos:
+
+id	nome	categoria	preco	quantidade
+1	Notebook	Eletrônicos	3500	5
+2	Mouse	Eletrônicos	150	20
+3	Cadeira	Móveis	600	10
+4	Mesa	Móveis	1200	2
+
+Podemos rodar uma única consulta usando todas as funções de agregação:
+sql
+SELECT 
+    COUNT(*) AS total_produtos,
+    SUM(preco) AS soma_dos_precos,
+    AVG(preco) AS media_dos_precos,
+    MAX(preco) AS produto_mais_caro,
+    MIN(preco) AS produto_mais_barato
+FROM produtos;
 
 
 
@@ -93,6 +210,22 @@ de uma loja de jogos seguindo o passo a passo abaixo.
 Dica: Tire um print/foto
 do terminal sempre que realizar as consultas solicitadas para anexar na
 entrega!
+
+
+CREATE DATABASE game_stop;
+use game_stop;
+
+CREATE TABLE plataforma (
+    id_plataforma INT PRIMARY KEY AUTO_INCREMENT,
+    nome_console VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE jogos (
+    id_plataforma INT PRIMARY KEY AUTO_INCREMENT,
+    nome_console VARCHAR(50) NOT NULL
+);
+
+
 
 
 
