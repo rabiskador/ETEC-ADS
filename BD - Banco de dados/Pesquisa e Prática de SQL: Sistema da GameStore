@@ -241,11 +241,15 @@ INSERT INTO jogos (nome_jogo, preco, quantidade_estoque, id_plataforma) VALUES
 ('CS', 79.99, 99, 3),
 ('GOD OF WAR', 199.00, 99, 2),
 ('GTA VI', 549.00, 99, 2),
-('ELDEN RING', 99.00, 99, 2);
+('ELDEN RING', 99.00, 99, 2),
+('ROBLOX', 29.99, 99, 3);
 
-
-
-
+SELECT 
+    jogos.nome_jogo, 
+    jogos.preco, 
+    plataforma.nome_console
+FROM jogos
+INNER JOIN plataforma ON jogos.id_plataforma = plataforma.id_plataforma;
 
 
 
