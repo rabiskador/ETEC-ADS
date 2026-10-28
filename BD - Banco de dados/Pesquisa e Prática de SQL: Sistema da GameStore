@@ -221,9 +221,28 @@ CREATE TABLE plataforma (
 );
 
 CREATE TABLE jogos (
-    id_plataforma INT PRIMARY KEY AUTO_INCREMENT,
-    nome_console VARCHAR(50) NOT NULL
+    id_jogo INT PRIMARY KEY AUTO_INCREMENT,
+    nome_jogo VARCHAR(50) NOT NULL,
+    preco DECIMAL(10,2),
+    quantidade_estoque INT NOT NULL,
+    id_plataforma INT NOT NULL,
+
+    FOREIGN KEY (id_plataforma) REFERENCES plataforma(id_plataforma)
 );
+
+INSERT INTO plataforma (nome_console) VALUES
+('XBOX'),
+('PS5'),
+('PC');
+
+INSERT INTO jogos (nome_jogo, preco, quantidade_estoque, id_plataforma) VALUES
+('FIFA', 350.00, 99, 1),
+('PES', 200.00, 99, 2),
+('CS', 79.99, 99, 3),
+('GOD OF WAR', 199.00, 99, 2),
+('GTA VI', 549.00, 99, 2),
+('ELDEN RING', 99.00, 99, 2);
+
 
 
 
